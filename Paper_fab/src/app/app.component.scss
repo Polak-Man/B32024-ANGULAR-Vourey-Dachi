@@ -1,0 +1,87 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: auto;
+  
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+  
+    div {
+      width: 100%;
+      margin-bottom: 15px;
+  
+      label {
+        display: inline-block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+      }
+  
+      input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+  
+        &:focus {
+          border-color: #007bff;
+          outline: none;
+        }
+      }
+    }
+  
+    /* ID field styling */
+    .readonly-field {
+      background-color: #f0f0f0; /* Light grey background for the ID field */
+      color: #333; /* Ensure the text color is readable */
+      border: 1px solid #ccc; /* Keep border consistent */
+    }
+  
+    /* Visibility and background color for hidden fields */
+    div[hidden] input {
+      background-color: white !important;
+    }
+  
+    /* Button styling */
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+  
+      &:hover {
+        background-color: #0056b3;
+      }
+  
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  
+    .button-group {
+      display: flex;
+      gap: 10px; /* Space between buttons */
+      margin-top: 20px; /* Optional, for spacing from the inputs */
+    }
+  
+    .button-group button {
+      padding: 10px 20px; /* Adjust button size */
+      font-size: 16px;
+    }
+  }
