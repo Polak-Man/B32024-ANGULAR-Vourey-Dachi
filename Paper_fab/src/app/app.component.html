@@ -1,6 +1,46 @@
-<!DOCTYPE html>
-<link rel="stylesheet" href="app.component.scss">
-<html>
-  <app-prod-list></app-prod-list>
-  <app-prod-details></app-prod-details>
-</html>
+<div class="main">
+  <h2>Liste des produits</h2>
+
+  <app-prod-table
+    [products]="products"
+    [isEditing]="isEditing"
+    [editingIndex]="editingIndex"
+    (edit)="handleEdit($event)"
+    (cancel)="handleCancel($event)"
+    (add)="handleAdd()"
+  ></app-prod-table>
+
+  <!-- Only show these fields when isEditing is true -->
+  <div [hidden]="!isEditing">
+    <div>
+      <label for="id">ID</label>
+      <input id="id" value="{{ currentProduct.id }}" readonly class="readonly-field" />
+    </div>
+    <div>
+      <label for="name">Nom</label>
+      <input id="name" value="{{ currentProduct.name }}" (input)="updateProduct('name', $event)" />
+    </div>
+    <div>
+      <label for="texture">Texture</label>
+      <input id="texture" value="{{ currentProduct.texture }}" (input)="updateProduct('texture', $event)" />
+    </div>
+    <div>
+      <label for="grammage">Grammage</label>
+      <input
+        id="grammage"
+        type="number"
+        value="{{ currentProduct.grammage }}"
+        (input)="updateProduct('grammage', $event)"
+      />
+    </div>
+    <div>
+      <label for="couleur">Couleur</label>
+      <input id="couleur" value="{{ currentProduct.couleur }}" (input)="updateProduct('couleur', $event)" />
+    </div>
+
+    <div class="button-group">
+      <button (click)="saveProduct()">Valider</button>
+      <button (click)="cancelChanges()">Annuler</button>
+    </div>
+  </div>
+</div>
