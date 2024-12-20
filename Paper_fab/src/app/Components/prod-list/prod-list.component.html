@@ -1,1 +1,19 @@
-<p>prod-list works!</p>
+<table>
+  <tr>
+    <th>Nom</th>
+    <th>Actions</th>
+  </tr>
+  @for (product of products; track $index) {
+    <tr [class.editing]="editingIndex === $index">
+      <td>{{ product.name }}</td>
+      <td>
+        <button (click)="onEdit($index)" [disabled]="isEditing && editingIndex !== $index">Edit</button>
+        <button (click)="onCancel($index)" [disabled]="isEditing && editingIndex !== $index">Delete</button>
+      </td>
+    </tr>
+  }
+</table>
+
+<div>
+  <button (click)="onAdd()" [disabled]="isEditing">Ajouter</button>
+</div>
