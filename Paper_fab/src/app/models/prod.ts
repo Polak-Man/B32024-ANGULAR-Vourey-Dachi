@@ -2,11 +2,12 @@ export class Product {
   public id: number;
   public name = 'Nouveau produit';
   public texture = '';
-  public grammage = 0;
+  public grammage :number;;
   public couleur = '';
 
-  constructor(id?: number) {
+  constructor(id?: number , grammage?: number) {
    
-    this.id = id || 0; 
+    this.id = id || 0;
+    this.grammage = grammage || 0;
   }
 }

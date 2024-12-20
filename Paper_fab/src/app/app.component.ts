@@ -38,9 +38,9 @@ export class AppComponent {
     if (!this.isEditing) {
       const newId = this.products.length > 0 ? Math.max(...this.products.map(p => p.id)) + 1 : 1;
       this.currentProduct = new Product();
-      this.currentProduct.id = newId;  // Automatically set the new ID
+      this.currentProduct.id = newId;  
       this.editingIndex = null;
-      this.isEditing = true;  // Set isEditing to true to display the form
+      this.isEditing = true;  
     }
   }
 
