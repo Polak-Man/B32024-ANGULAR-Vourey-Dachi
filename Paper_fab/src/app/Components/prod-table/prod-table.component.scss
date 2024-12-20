@@ -1,15 +1,13 @@
-/* Arrière-plan animé */
 body {
   margin: 0;
   padding: 0;
-  height: 100vh; /* Prend toute la hauteur de la fenêtre */
-  overflow: hidden; /* Masque tout débordement */
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Styles pour le tableau */
 .editing {
   background-color: #8b969f;  
 }
