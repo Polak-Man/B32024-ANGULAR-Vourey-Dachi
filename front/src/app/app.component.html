@@ -12,27 +12,34 @@
   ></app-prod-table>
 
   <!-- Only show these fields when isEditing is true -->
-  <div [hidden]="!isEditing">
-    <div>
-      <label for="id">ID</label>
-      <input id="id" value="{{ currentProduct.id }}" readonly class="readonly-field" />
-    </div>
-    <div>
-      <label for="name">Nom</label>
-      <input id="name" value="{{ currentProduct.name }}" (input)="updateProduct('name', $event)" />
-    </div>
-    <div>
-      <label for="texture">Texture</label>
-      <input id="texture" value="{{ currentProduct.texture }}" (input)="updateProduct('texture', $event)" />
-    </div>
-    <div>
-      <label for="grammage">Grammage</label>
-      <input
-        id="grammage"
-        type="number"
-        value="{{ currentProduct.grammage }}"
-        (input)="updateProduct('grammage', $event)"
-      />
+ <div [hidden]="!isEditing">
+    <form [formGroup]="productForm">
+      <div>
+        <label for="id">ID</label>
+        <input id="id" formControlName="id" readonly class="readonly-field" />
+      </div>
+      <div>
+        <label for="name">Nom</label>
+        <input id="name" formControlName="name" />
+      </div>
+      <div>
+        <label for="texture">Texture</label>
+        <input id="texture" formControlName="texture" />
+      </div>
+      <div>
+        <label for="grammage">Grammage</label>
+        <input id="grammage" type="number" formControlName="grammage" />
+      </div>
+      <div>
+        <label for="couleur">Couleur</label>
+        <input id="couleur" formControlName="couleur" />
+      </div>
+
+      <div class="button-group">
+        <button type="button" (click)="saveProduct()">Valider</button>
+        <button type="button" (click)="cancelChanges()">Annuler</button>
+      </div>
+     </form>
     </div>
     <div>
       <label for="couleur">Couleur</label>
