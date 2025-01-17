@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Product } from './models/prod';
 import { ProdTableComponent } from './components/prod-table/prod-table.component';
 import { ProdService } from './service/prod.service'; // Assurez-vous que le chemin est correct
@@ -10,7 +9,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule, ProdTableComponent],
+  imports: [FormsModule, ProdTableComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
