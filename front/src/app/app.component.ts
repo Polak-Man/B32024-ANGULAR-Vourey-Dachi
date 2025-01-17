@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Product } from './models/prod';
 import { ProdTableComponent } from './components/prod-table/prod-table.component';
+import { ProdService } from './service/prod.service'; // Assurez-vous que le chemin est correct
+import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -10,15 +13,33 @@ import { ProdTableComponent } from './components/prod-table/prod-table.component
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  public products: Product[] = [
-    { id: 1, name: 'Papier Recyclé', texture: 'Lisse', grammage: 80, couleur: 'blanc' },
-    { id: 2, name: 'Carton Fort', texture: 'Rugueux', grammage: 350, couleur: 'marron' },
-  ];
-
+export class AppComponent implements OnInit {
+  public products: Product[] = [];
   public currentProduct: Product = new Product();
   public isEditing: boolean = false;
   public editingIndex: number | null = null;
+
+  private _myRefreshObservable = new BehaviorSubject<number>(1);
+
+  constructor(private _ProdService: ProdService) {
+    this._myRefreshObservable
+      .pipe(
+        switchMap(() => {
+          return this._ProdService.get();
+        }),
+      )
+      .subscribe((value: Product[]) => {
+        this.products = value;
+      });
+  }
+
+  ngOnInit(): void {
+    //Salut ! Je suis un bout de code mort inutile :p, à la base je devais faire quelque chose mais je ne sais plus quoi
+  }
+
+  onRefreshList(): void {
+    this._myRefreshObservable.next(1);
+  }
 
   handleEdit(index: number): void {
     if (!this.isEditing || this.editingIndex === index) {
@@ -30,7 +51,10 @@ export class AppComponent {
 
   handleCancel(index: number): void {
     if (!this.isEditing) {
-      this.products.splice(index, 1);
+      const productToDelete = this.products[index];
+      this._ProdService.delete(productToDelete.id).subscribe(() => {
+      this.products.splice(index, 1); // Supprimez le produit de la liste
+      });
     }
   }
 
@@ -46,11 +70,22 @@ export class AppComponent {
 
   saveProduct(): void {
     if (this.editingIndex !== null) {
-      this.products[this.editingIndex] = { ...this.currentProduct };
+      // Si vous êtes en mode édition, mettez à jour le produit existant
+      this._ProdService.put(this.currentProduct).subscribe(() => {
+        if (this.editingIndex !== null) {
+          this.products[this.editingIndex] = { ...this.currentProduct };
+        }
+        this.resetEditingState();
+        this.onRefreshList(); // Rafraîchir la liste après l'enregistrement
+      });
     } else {
-      this.products.push({ ...this.currentProduct });
+      // Si vous ajoutez un nouveau produit
+      this._ProdService.add(this.currentProduct).subscribe((newProduct) => {
+        this.products.push(newProduct); // Ajoutez le produit à la liste
+        this.resetEditingState();
+        this.onRefreshList(); // Rafraîchir la liste après l'enregistrement
+      });
     }
-    this.resetEditingState();
   }
 
   updateProduct(field: keyof Product, event: Event): void {
